@@ -1,0 +1,477 @@
+<script>
+        // Konami Code Easter Egg
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiCodePosition = 0;
+
+        document.addEventListener('keydown', function(e) {
+            // Get the key that was pressed
+            const key = e.key;
+            
+            // Get the key from konami code that should match
+            const requiredKey = konamiCode[konamiCodePosition];
+            
+            // Check if the key matches
+            if (key === requiredKey) {
+                // Move to the next key in the konami code sequence
+                konamiCodePosition++;
+                
+                // If the full sequence is matched, reveal the easter egg
+                if (konamiCodePosition === konamiCode.length) {
+                    revealEasterEgg();
+                    konamiCodePosition = 0;
+                }
+            } else {
+                // Reset position if there's a mismatch
+                konamiCodePosition = 0;
+            }
+        });
+
+        // Easter egg reveal function
+        function revealEasterEgg() {
+            const easterEgg = document.querySelector('.easter-egg');
+            easterEgg.classList.add('revealed');
+            
+            // Hide again after 10 seconds
+            setTimeout(() => {
+                easterEgg.classList.remove('revealed');
+            }, 10000);
+        }
+    </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>claire.social | links</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --primary-color: #00D632;
+            --secondary-color: #FF00A2;
+            --tertiary-color: #23C9FF;
+            --accent-color: #FCEE21;
+            --card-bg: #111111;
+            --easter-egg-color: rgba(255, 255, 255, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 2;
+            margin-top: 2rem;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .profile-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+        }
+
+        .profile-shape {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 22px;
+            background: var(--primary-color);
+            transform: rotate(10deg);
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(0, 214, 50, 0.4);
+        }
+
+        @keyframes float {
+            0% {
+                transform: rotate(10deg) translateY(0px);
+            }
+            50% {
+                transform: rotate(15deg) translateY(-10px);
+            }
+            100% {
+                transform: rotate(10deg) translateY(0px);
+            }
+        }
+
+        .profile-img {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            object-fit: cover;
+            transform: rotate(-5deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 3px solid white;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            text-align: center;
+        }
+
+        h1 span {
+            display: inline-block;
+        }
+
+        .highlight-green {
+            color: var(--primary-color);
+        }
+
+        .highlight-pink {
+            color: var(--secondary-color);
+        }
+
+        .highlight-blue {
+            color: var(--tertiary-color);
+        }
+
+        .highlight-yellow {
+            color: var(--accent-color);
+        }
+
+        .bio {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .link {
+            background-color: var(--card-bg);
+            height: 180px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem;
+        }
+
+        .link:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .link-letterboxd:hover {
+            background-color: rgba(255, 80, 0, 0.1);
+            border-color: #ff5000;
+        }
+
+        .link-lastfm:hover {
+            background-color: rgba(215, 0, 0, 0.1);
+            border-color: #d70000;
+        }
+
+        .link-discogs:hover {
+            background-color: rgba(240, 240, 240, 0.05);
+            border-color: #f5f5f5;
+        }
+
+        .link-bluesky:hover {
+            background-color: rgba(0, 149, 246, 0.1);
+            border-color: #0095f6;
+        }
+
+        .link-github:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: white;
+        }
+
+        .link-icon {
+            width: 45px;
+            height: 45px;
+            transition: all 0.3s ease;
+        }
+
+        .link-letterboxd:hover .link-icon {
+            color: #ff5000;
+        }
+
+        .link-lastfm:hover .link-icon {
+            color: #d70000;
+        }
+
+        .link-discogs:hover .link-icon {
+            color: #f5f5f5;
+        }
+
+        .link-bluesky:hover .link-icon {
+            color: #0095f6;
+        }
+
+        .link-github:hover .link-icon {
+            color: white;
+        }
+
+        .link-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .link-description {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+
+        .corner-shape {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 30% 70% 70% 30% / 30% 43% 57% 70%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .shape-1 {
+            top: -150px;
+            right: -150px;
+            background: var(--primary-color);
+            animation: morph1 15s linear infinite alternate;
+        }
+
+        .shape-2 {
+            bottom: -150px;
+            left: -150px;
+            background: var(--secondary-color);
+            animation: morph2 20s linear infinite alternate;
+        }
+
+        @keyframes morph1 {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 43% 57% 70%;
+            }
+            50% {
+                border-radius: 70% 30% 46% 54% / 30% 30% 70% 70%;
+            }
+            100% {
+                border-radius: 30% 70% 70% 30% / 53% 30% 70% 47%;
+            }
+        }
+
+        @keyframes morph2 {
+            0% {
+                border-radius: 53% 47% 34% 66% / 63% 46% 54% 37%;
+            }
+            50% {
+                border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+            }
+            100% {
+                border-radius: 57% 43% 30% 70% / 63% 36% 64% 37%;
+            }
+        }
+
+        footer {
+            margin-top: 4rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Easter egg styling */
+        .easter-egg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: transparent;
+            cursor: default;
+            opacity: 0;
+            z-index: 10;
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .easter-egg.revealed {
+            opacity: 1;
+            background-color: var(--secondary-color);
+            box-shadow: 0 0 15px var(--secondary-color);
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        .key-sequence {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 640px) {
+            .links {
+                grid-template-columns: 1fr;
+            }
+
+            .link {
+                height: auto;
+                padding: 1.25rem;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        /* Light mode support */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #ffffff;
+                --text-color: #000000;
+                --card-bg: #f5f5f5;
+                --easter-egg-color: rgba(0, 0, 0, 0.05);
+            }
+
+            .noise {
+                opacity: 0.05;
+            }
+
+            .bio {
+                color: rgba(0, 0, 0, 0.8);
+            }
+
+            .link {
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .link-description {
+                color: rgba(0, 0, 0, 0.6);
+            }
+
+            footer {
+                color: rgba(0, 0, 0, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="corner-shape shape-1"></div>
+    <div class="corner-shape shape-2"></div>
+    <div class="key-sequence"></div>
+    <a href="https://anhedonia.co" class="easter-egg" title="found me!" aria-label="hidden link to anhedonia"></a>
+
+    <div class="container">
+        <div class="header">
+            <div class="profile-container">
+                <div class="profile-shape"></div>
+                <img src="/api/placeholder/400/400" alt="Profile Picture" class="profile-img">
+            </div>
+            
+            <h1>
+                <span class="highlight-green">claire</span> 
+                <span class="highlight-pink">.social</span>
+            </h1>
+            <p class="bio">film enthusiast, music collector, code creator, and digital explorer. welcome to my corner of the internet.</p>
+        </div>
+
+        <div class="links">
+            <a href="https://letterboxd.com/mumbleclaire/" class="link link-letterboxd">
+                <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.02 16.069L4 12.065l4.02-4.004v8.008zm3.98 0L8 12.065l3.98-4.004v8.008zM16 12.065l-3.98 4.004v-8.008L16 12.065z"/>
+                </svg>
+                <span class="link-name">letterboxd</span>
+                <span class="link-description">my film diary & reviews</span>
+            </a>
+            <a href="https://www.last.fm/user/punkbunniebabe" class="link link-lastfm">
+                <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10.584 17.209l-.88-2.392s-1.43 1.594-3.573 1.594c-1.897 0-3.244-1.649-3.244-4.288 0-3.382 1.704-4.591 3.381-4.591 2.42 0 3.189 1.567 3.849 3.574l.88 2.749c.88 2.666 2.529 4.81 7.285 4.81 3.409 0 5.718-1.044 5.718-3.793 0-2.227-1.265-3.382-3.63-3.931l-1.757-.385c-1.21-.275-1.567-.77-1.567-1.595 0-.935.742-1.485 1.952-1.485 1.32 0 2.034.495 2.144 1.677l2.749-.33c-.22-2.474-1.924-3.491-4.729-3.491-2.474 0-4.893.935-4.893 3.931 0 1.87.907 3.051 3.189 3.601l1.87.44c1.402.33 1.869.907 1.869 1.704 0 1.017-.99 1.43-2.86 1.43-2.776 0-3.93-1.457-4.59-3.464l-.907-2.75c-1.155-3.573-2.995-4.893-6.653-4.893C2.144 5.33 0 7.804 0 12.31c0 4.233 2.144 6.544 5.993 6.544 3.106 0 4.591-1.457 4.591-1.457v-.188z"/>
+                </svg>
+                <span class="link-name">last.fm</span>
+                <span class="link-description">track my music listening</span>
+            </a>
+            <a href="https://www.discogs.com/user/punkbunniebabe" class="link link-discogs">
+                <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 4.13a7.87 7.87 0 110 15.74 7.87 7.87 0 010-15.74zm0 1.774a6.096 6.096 0 100 12.192 6.096 6.096 0 000-12.192zm0 1.681a4.413 4.413 0 110 8.827 4.413 4.413 0 010-8.827zm0 1.777a2.637 2.637 0 100 5.273 2.637 2.637 0 000-5.273zm0 1.729a.908.908 0 110 1.816.908.908 0 010-1.816z"/>
+                </svg>
+                <span class="link-name">discogs</span>
+                <span class="link-description">my vinyl collection</span>
+            </a>
+            <a href="https://bsky.app/profile/claire.social" class="link link-bluesky">
+                <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 1.5C6.2 1.5 1.5 6.2 1.5 12S6.2 22.5 12 22.5 22.5 17.8 22.5 12 17.8 1.5 12 1.5zM8.32 16.3h2.13c1.75 0 2.92-1.11 2.92-2.62 0-1.31-.98-2.34-2.35-2.48v-.06c1.05-.14 1.84-.98 1.84-2.09 0-1.33-.97-2.25-2.51-2.25H8.32v9.5zm2.02-7.87c.81 0 1.28.45 1.28 1.21s-.47 1.21-1.28 1.21H9.94V8.43h.4zm.09 3.69c.94 0 1.44.47 1.44 1.31s-.5 1.31-1.44 1.31h-.49v-2.62h.49z"/>
+                </svg>
+                <span class="link-name">bluesky</span>
+                <span class="link-description">@claire.social</span>
+            </a>
+            <a href="https://github.com/yoclaire" class="link link-github">
+                <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+                <span class="link-name">github</span>
+                <span class="link-description">check out my code</span>
+            </a>
+        </div>
+
+        <footer>
+            © 2025 claire
+        </footer>
+    </div>
+</body>
+</html>
