@@ -1,4 +1,4 @@
-    <script>
+
         // Konami Code Easter Egg
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiCodePosition = 0;
@@ -36,5 +36,4 @@
                 easterEgg.classList.remove('revealed');
             }, 10000);
         }
-    </script>
-    
+
