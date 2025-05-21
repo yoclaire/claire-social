@@ -124,9 +124,24 @@ h1 span {
 }
 
 .cashapp-qr {
-  width: 80px;
-  height: 80px;
+  width: 130px;
+  height: 130px;
   margin-bottom: 8px;
+  object-fit: contain;
+}
+
+/* Make Cash App tile taller to accommodate larger QR code */
+.link-cashapp {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* For mobile, ensure the QR code is still large enough */
+@media (max-width: 480px) {
+  .cashapp-qr {
+    width: 160px;
+    height: 160px;
+  }
 }
 
 /* Footer */
