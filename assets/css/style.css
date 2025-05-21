@@ -73,8 +73,10 @@ h1 span {
 /* Links Grid */
 .links {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-template-rows: repeat(3, 1fr);    /* 3 rows */
+  gap: 16px;                             /* Consistent gap between all cells */
+  width: 100%;
 }
 
 .link {
@@ -83,11 +85,12 @@ h1 span {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  aspect-ratio: 1 / 1;  /* Make all links square */
+  padding: 20px;        /* Consistent padding */
   color: #000000;
   background-color: #ffffff;
   border: 1px solid #E6E6E6; /* very subtle border */
   border-radius: 6px;
-  padding: 24px 16px;
   transition: background-color 0.2s ease;
   height: auto;
   box-shadow: none;
